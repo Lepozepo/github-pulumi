@@ -56,7 +56,12 @@ async function run() {
                 core.info(s)
             },
             stderr: (data: Buffer) => {
-                core.error(data.toString())
+                const s = data.toString();
+                if ((/warning/ig).test(s)) {
+                    core.info(s);
+                } else {
+                    core.error(s);
+                }
             }
         },
         ignoreReturnCode: true
